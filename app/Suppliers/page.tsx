@@ -54,6 +54,7 @@ const page = () => {
 
   return (
    <CustomerComponent
+       nameCustomer='المورد'
        title='الموردين' 
        customers={suppliers}
        buttonAdd="اضافه الموردين"

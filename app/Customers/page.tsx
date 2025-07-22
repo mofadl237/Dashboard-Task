@@ -44,6 +44,7 @@ const page = () => {
 
   return (
     <CustomerComponent
+    nameCustomer='العميل'
     title='العملاء' 
     customers={customers}
     buttonAdd="اضافه العملاء"

@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table";
 import { ICustomer } from "@/Interface";
 import { Edit2, Trash } from "lucide-react";
+import { PeopleDialog } from './Dialog/PeopleDialog';
 
 
 
@@ -20,14 +21,15 @@ interface IProps {
     customers: ICustomer[];
     title:string;
     caption:string;
+    nameCustomer:string;
     buttonAdd:string;
 }
-export default function CustomerComponent({customers,title,buttonAdd,caption}:IProps) {
+export default function CustomerComponent({nameCustomer,customers,title,buttonAdd,caption}:IProps) {
   return (
     <div className="p-4 rounded-xl shadow-md bg-white">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">{title}</h2>
-        <Button>{buttonAdd}</Button>
+        <PeopleDialog buttonAdd={buttonAdd} nameCustomer={nameCustomer} title={title}/>
       </div>
 
       <Table>
@@ -38,9 +40,9 @@ export default function CustomerComponent({customers,title,buttonAdd,caption}:IP
             <TableHead>رقم الهاتف</TableHead>
             <TableHead>الايميل</TableHead>
             <TableHead>عدد الطلبات</TableHead>
-            <TableHead>إجمالي المشتريات</TableHead>
+            <TableHead>اجمالي المشتريات</TableHead>
             <TableHead>آخر عملية شراء</TableHead>
-            <TableHead className="text-right">إجراء</TableHead>
+          <TableHead className="text-center">الاجراءات</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
