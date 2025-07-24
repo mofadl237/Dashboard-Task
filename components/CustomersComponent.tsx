@@ -53,7 +53,7 @@ export default function CustomerComponent({nameCustomer,customers,title,buttonAd
               <TableCell>{customer.email}</TableCell>
               <TableCell>{customer.ordersCount}</TableCell>
               <TableCell>{customer.totalPurchases} ج.م</TableCell>
-              <TableCell>{customer.lastPurchaseDate}</TableCell>
+              <TableCell>{customer.lastPurchaseDate.toLocaleDateString()}</TableCell>
               <TableCell className="flex justify-between gap-2">
                 <Button  className="w-1/2" variant="outline">
                   <Edit2/>
@@ -67,7 +67,7 @@ export default function CustomerComponent({nameCustomer,customers,title,buttonAd
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={3}>الإجمالي</TableCell>
+            <TableCell colSpan={4}>الإجمالي</TableCell>
             <TableCell>
               {customers.reduce((sum, c) => sum + c.totalPurchases, 0)} ج.م
             </TableCell>

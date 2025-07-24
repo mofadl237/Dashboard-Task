@@ -15,12 +15,12 @@ export interface ICustomer {
   id: string;
   name: string;
   phone: string;
-  email?: string;
-  address?: string;
+  email: string;
+  // address?: string;
   totalPurchases: number;
   ordersCount: number;     
-  lastPurchaseDate?: string; 
-  createdAt?: string;
+  lastPurchaseDate: Date; 
+  createdAt: Date;
 }
 export interface IProduct{
     id:number;
