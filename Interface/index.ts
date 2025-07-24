@@ -12,7 +12,7 @@ export interface IExpense  {
 };
 
 export interface ICustomer {
-  id: string;
+  id?: string;
   name: string;
   phone: string;
   email: string;
@@ -20,7 +20,7 @@ export interface ICustomer {
   totalPurchases: number;
   ordersCount: number;     
   lastPurchaseDate: Date; 
-  createdAt: Date;
+  createdAt?: Date;
 }
 export interface IProduct{
     id:number;

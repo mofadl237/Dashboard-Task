@@ -47,8 +47,8 @@ export default function RenderAccounts({  revenues, expenses }: Props) {
 
           <TabsContent value="revenues">
             <Table>
-              <TableHeader>
                 <TableCaption>الايرادات : {allRevenue} </TableCaption>
+              <TableHeader>
 
                 <TableRow>
                   <TableHead>المصدر</TableHead>
@@ -70,8 +70,8 @@ export default function RenderAccounts({  revenues, expenses }: Props) {
 
           <TabsContent value="expenses">
             <Table>
-              <TableHeader>
                 <TableCaption>المصروفات : {allExpenses} </TableCaption>
+              <TableHeader>
                 <TableRow>
                   <TableHead>التصنيف</TableHead>
                   <TableHead>الوصف</TableHead>

@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -11,8 +10,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ICustomer } from "@/Interface";
-import { Edit2, Trash } from "lucide-react";
 import { PeopleDialog } from './Dialog/PeopleDialog';
+import CustomerAction from "./Action/CustomerAction";
 
 
 
@@ -54,14 +53,7 @@ export default function CustomerComponent({nameCustomer,customers,title,buttonAd
               <TableCell>{customer.ordersCount}</TableCell>
               <TableCell>{customer.totalPurchases} ج.م</TableCell>
               <TableCell>{customer.lastPurchaseDate.toLocaleDateString()}</TableCell>
-              <TableCell className="flex justify-between gap-2">
-                <Button  className="w-1/2" variant="outline">
-                  <Edit2/>
-                </Button>
-                <Button  className="w-1/2" variant="destructive">
-                  <Trash/>
-                </Button>
-              </TableCell>
+              <CustomerAction title={title} customer={customer} name={nameCustomer}/>
             </TableRow>
           ))}
         </TableBody>

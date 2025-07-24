@@ -1,6 +1,7 @@
 'use server'
 import { ICustomer } from '@/Interface';
 import { PrismaClient } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
 const prisma = new PrismaClient();
 
 export const getCustomers = async()=>{
@@ -8,13 +9,25 @@ export const getCustomers = async()=>{
    return Customers
 }
 export const addCustomers = async(body:ICustomer)=>{
-    prisma.customers.create({
+   await prisma.customers.create({
         data:body
-    })
+    });
+    revalidatePath('/')
 }
-export const deleteCustomers = async()=>{
-    prisma.customers.findMany()
+export const deleteCustomers = async(id:string)=>{
+   await prisma.customers.delete({
+        where:{
+            id,
+        }
+    });
+    revalidatePath('/')
 }
-export const updateCustomers = async()=>{
-    prisma.customers.findMany()
+export const updateCustomers = async(id:string,data:ICustomer)=>{
+    await prisma.customers.update({
+        where:{
+            id,
+        },
+        data,
+    });
+    revalidatePath('/')
 }

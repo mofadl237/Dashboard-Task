@@ -1,5 +1,5 @@
 "use client";
-import { addCustomers } from "@/action/dashboard";
+import {  updateCustomers } from "@/action/dashboard";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -28,14 +28,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useState } from "react";
-import { Loader } from "lucide-react";
+import { Edit2, Loader } from "lucide-react";
+import { ICustomer } from "@/Interface";
 
 interface IProps {
   title: string;
-  buttonAdd: string;
   nameCustomer: string;
+  people: ICustomer;
 }
-export function PeopleDialog({ title, buttonAdd, nameCustomer }: IProps) {
+export function EditPeople({ title, nameCustomer, people }: IProps) {
   //1- state
   const [loading, setIsLoading] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
@@ -43,22 +44,21 @@ export function PeopleDialog({ title, buttonAdd, nameCustomer }: IProps) {
   const form = useForm<z.infer<typeof peopleSchema>>({
     resolver: zodResolver(peopleSchema),
     defaultValues: {
-      email: "",
-      name: "",
-      lastPurchaseDate: new Date(),
-      ordersCount: 0,
-      phone: "",
-      totalPurchases: 0,
+      email: people.email,
+      name: people.name,
+      lastPurchaseDate: people.lastPurchaseDate,
+      ordersCount: people.ordersCount,
+      phone: people.phone,
+      totalPurchases: people.totalPurchases,
     },
   });
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof peopleSchema>) {
     
-    console.log("New Values ========> ", values);
     setIsLoading(true);
     if (nameCustomer === "العميل") {
-      await addCustomers(values);
+      await updateCustomers(people.id! , values);
     } else {
     }
     setIsLoading(false);
@@ -69,7 +69,9 @@ export function PeopleDialog({ title, buttonAdd, nameCustomer }: IProps) {
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <DialogTrigger asChild>
-        <Button variant="outline">{buttonAdd}</Button>
+        <Button variant="outline">
+          <Edit2 />
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -169,8 +171,18 @@ export function PeopleDialog({ title, buttonAdd, nameCustomer }: IProps) {
                       <Input
                         type="date"
                         // {...field}
-                          onChange={e => field.onChange(new Date(e.target.value))}
-
+                        value={
+                          field.value
+                            ? typeof field.value === "string"
+                              ? field.value
+                              : new Date(field.value)
+                                  .toISOString()
+                                  .split("T")[0]
+                            : ""
+                        }
+                        onChange={(e) =>
+                          field.onChange(new Date(e.target.value))
+                        }
                       />
                     </FormControl>
 

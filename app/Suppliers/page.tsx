@@ -12,8 +12,8 @@ const page = () => {
         email:'m10@gmail.com',
         totalPurchases: 7000,
         ordersCount: 2,
-        lastPurchaseDate: "2025-07-19",
-      },
+ lastPurchaseDate: new Date("2025-07-19"),
+        createdAt:new Date(),      },
       {
         id: "2",
         name: " ابو الهدي",
@@ -21,8 +21,8 @@ const page = () => {
         email:'m1@gmail.com',
         totalPurchases: 5000,
         ordersCount: 1,
-        lastPurchaseDate: "2025-07-20",
-      },
+ lastPurchaseDate: new Date("2025-07-20"),
+        createdAt:new Date(),      },
       {
         id: "3",
         name: "أحمد ياسر",
@@ -30,8 +30,8 @@ const page = () => {
         email:'m3@gmail.com',
         totalPurchases: 15000,
         ordersCount: 3,
-        lastPurchaseDate: "2025-07-21",
-      },
+ lastPurchaseDate: new Date("2025-5-23"),
+        createdAt:new Date(),      },
       {
         id: "4",
         name: "ياسر علي",
@@ -39,7 +39,8 @@ const page = () => {
         email:'m4@gmail.com',
         totalPurchases: 4000,
         ordersCount: 8,
-        lastPurchaseDate: "2025-07-22",
+        lastPurchaseDate: new Date("2025-08-22"),
+        createdAt:new Date(),
       },
       {
         id: "5",
@@ -48,7 +49,8 @@ const page = () => {
         email:'m4@gmail.com',
         totalPurchases: 4000,
         ordersCount: 8,
-        lastPurchaseDate: "2025-07-22",
+        lastPurchaseDate: new Date("2025-07-22"),
+        createdAt:new Date(),
       },
     ];
 
