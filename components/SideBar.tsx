@@ -1,4 +1,4 @@
-import { Boxes, Home, ReceiptText, ShoppingCart, Truck, Users, Wallet} from "lucide-react"
+import { Boxes, ReceiptText, ShoppingCart, Truck, Users, Wallet} from "lucide-react"
 
 import {
   Sidebar,

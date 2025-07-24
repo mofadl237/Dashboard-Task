@@ -1,5 +1,5 @@
 "use client";
-import { addCustomers } from "@/action/dashboard";
+import { addCustomers, addSuppliers } from "@/action/dashboard";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -55,11 +55,11 @@ export function PeopleDialog({ title, buttonAdd, nameCustomer }: IProps) {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof peopleSchema>) {
     
-    console.log("New Values ========> ", values);
     setIsLoading(true);
     if (nameCustomer === "العميل") {
       await addCustomers(values);
     } else {
+      await addSuppliers(values);
     }
     setIsLoading(false);
     setOpenDialog(false);

@@ -1,5 +1,5 @@
 "use client";
-import {  updateCustomers } from "@/action/dashboard";
+import {  updateCustomers, updateSuppliers } from "@/action/dashboard";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -60,6 +60,7 @@ export function EditPeople({ title, nameCustomer, people }: IProps) {
     if (nameCustomer === "العميل") {
       await updateCustomers(people.id! , values);
     } else {
+        await updateSuppliers(people.id! , values);
     }
     setIsLoading(false);
     setOpenDialog(false);

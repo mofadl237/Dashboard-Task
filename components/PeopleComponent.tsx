@@ -23,7 +23,7 @@ interface IProps {
     nameCustomer:string;
     buttonAdd:string;
 }
-export default function CustomerComponent({nameCustomer,customers,title,buttonAdd,caption}:IProps) {
+export default function PeopleComponent({nameCustomer,customers,title,buttonAdd,caption}:IProps) {
   return (
     <div className="p-4 rounded-xl shadow-md bg-white">
       <div className="flex justify-between items-center mb-4">

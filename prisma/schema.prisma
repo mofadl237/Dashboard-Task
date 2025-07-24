@@ -17,3 +17,14 @@ model Customers {
     lastPurchaseDate DateTime
     createdAt        DateTime @default(now())
 }
+
+model Suppliers {
+    id               String   @id @default(auto()) @map("_id") @db.ObjectId
+    name             String   @unique
+    phone            String
+    email            String
+    totalPurchases   Int
+    ordersCount      Int
+    lastPurchaseDate DateTime
+    createdAt        DateTime @default(now())
+}

@@ -1,10 +1,10 @@
 import { getCustomers } from "@/action/dashboard";
-import CustomerComponent from "@/components/CustomersComponent"
+import PeopleComponent from "@/components/PeopleComponent"
 
 const page = async () => {
 const Customers = await getCustomers();
   return (
-    <CustomerComponent
+    <PeopleComponent
     nameCustomer='العميل'
     title='العملاء' 
     customers={Customers}
