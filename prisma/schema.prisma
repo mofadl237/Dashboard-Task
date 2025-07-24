@@ -28,3 +28,28 @@ model Suppliers {
     lastPurchaseDate DateTime
     createdAt        DateTime @default(now())
 }
+
+model Inventory{
+    id String   @id @default(auto()) @map("_id") @db.ObjectId
+    name String   
+    quantity Int
+    category String
+    price Int
+    supplierName String
+}
+model Purchases{
+    id String   @id @default(auto()) @map("_id") @db.ObjectId
+    name String   
+    quantity Int
+    category String
+    price Int
+    supplierName String
+}
+model Sales{
+    id String   @id @default(auto()) @map("_id") @db.ObjectId
+    name String   
+    quantity Int
+    category String
+    price Int
+    supplierName String
+}

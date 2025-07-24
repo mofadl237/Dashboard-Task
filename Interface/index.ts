@@ -23,7 +23,7 @@ export interface ICustomer {
   createdAt?: Date;
 }
 export interface IProduct{
-    id:number;
+    id?:string;
     name:string;
     quantity:number;
     category:string;

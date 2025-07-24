@@ -8,3 +8,11 @@ export const peopleSchema = z.object({
   totalPurchases: z.number(),
   lastPurchaseDate: z.date(),
 });
+
+export const productSchema = z.object({
+  supplierName: z.string().min(1),
+  name: z.string().min(1),
+  category: z.string().min(1),
+  price: z.number().min(0),
+  quantity: z.number().min(0),
+});

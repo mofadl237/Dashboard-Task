@@ -1,5 +1,4 @@
 "use client";
-import { addCustomers, addSuppliers } from "@/action/dashboard";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { Input } from "@/components/ui/input";
-import { peopleSchema } from "@/validation";
+import { productSchema } from "@/validation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -27,39 +26,53 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Edit2, Loader } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 import { useState } from "react";
-import { Loader } from "lucide-react";
+import {  updateInventory, updatePurchases, updateSales } from "@/action/dashboard";
+import { IProduct } from "@/Interface";
 
 interface IProps {
   title: string;
-  buttonAdd: string;
   nameCustomer: string;
+  product:IProduct;
 }
-export function PeopleDialog({ title, buttonAdd, nameCustomer }: IProps) {
-  //1- state
+
+export function EditProduct({ title, nameCustomer,product }: IProps) {
+
   const [loading, setIsLoading] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
+
   //2- handler
-  const form = useForm<z.infer<typeof peopleSchema>>({
-    resolver: zodResolver(peopleSchema),
+  const form = useForm<z.infer<typeof productSchema>>({
+    resolver: zodResolver(productSchema),
     defaultValues: {
-      email: "",
-      name: "",
-      lastPurchaseDate: new Date(),
-      ordersCount: 0,
-      phone: "",
-      totalPurchases: 0,
+      category: product.category,
+      name: product.name,
+      price: product.price,
+      quantity:product.quantity,
+      supplierName: product.supplierName,
     },
   });
 
+
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof peopleSchema>) {
-    
+  async function onSubmit(values: z.infer<typeof productSchema>) {
+
+    console.log(values, nameCustomer);
     setIsLoading(true);
-    if (nameCustomer === "العميل") {
-      await addCustomers(values);
-    } else {
-      await addSuppliers(values);
+    if (nameCustomer === "المورد") {
+      await updateInventory(product.id!,values);
+    } else if(nameCustomer === "العميل"){
+      await updateSales(product.id!,values);
+    }else{
+      await updatePurchases(product.id!,values);
     }
     setIsLoading(false);
     setOpenDialog(false);
@@ -67,20 +80,22 @@ export function PeopleDialog({ title, buttonAdd, nameCustomer }: IProps) {
   }
 
   return (
+    
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <DialogTrigger asChild>
-        <Button variant="outline">{buttonAdd}</Button>
+        <Button variant="outline"><Edit2/></Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
+
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-6">
             <div className="grid gap-4">
               <FormField
                 control={form.control}
-                name="name"
+                name="supplierName"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{nameCustomer}</FormLabel>
@@ -96,25 +111,10 @@ export function PeopleDialog({ title, buttonAdd, nameCustomer }: IProps) {
               />
               <FormField
                 control={form.control}
-                name="phone"
+                name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>رقم الهاتف</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>الايميل</FormLabel>
+                    <FormLabel>اسم المنتج</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -125,28 +125,36 @@ export function PeopleDialog({ title, buttonAdd, nameCustomer }: IProps) {
               />
               <FormField
                 control={form.control}
-                name="ordersCount"
+                name="category"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>الطلبات</FormLabel>
+                    <FormLabel>الصنف</FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        {...field}
-                        onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                      />
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue placeholder="اختر الصنف" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="خضار">خضار</SelectItem>
+                          <SelectItem value="فاكهه">فاكهه</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </FormControl>
-
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
-                name="totalPurchases"
+                name="quantity"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>اجمالي المشتريات</FormLabel>
+                    <FormLabel>الكميه</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -161,16 +169,15 @@ export function PeopleDialog({ title, buttonAdd, nameCustomer }: IProps) {
               />
               <FormField
                 control={form.control}
-                name="lastPurchaseDate"
+                name="price"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>اخر عمليه شراء</FormLabel>
+                    <FormLabel>السعر</FormLabel>
                     <FormControl>
                       <Input
-                        type="date"
-                        // {...field}
-                          onChange={e => field.onChange(new Date(e.target.value))}
-
+                        type="number"
+                        {...field}
+                        onChange={(e) => field.onChange(e.target.valueAsNumber)}
                       />
                     </FormControl>
 
@@ -181,9 +188,9 @@ export function PeopleDialog({ title, buttonAdd, nameCustomer }: IProps) {
             </div>
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline" className="cursor-pointer">Cancel</Button>
+                <Button variant="outline">Cancel</Button>
               </DialogClose>
-              <Button type="submit" className="cursor-pointer">
+              <Button type="submit">
                 {loading ? <Loader /> : "Save changes"}
               </Button>
             </DialogFooter>
